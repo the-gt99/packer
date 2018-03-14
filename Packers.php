@@ -1,6 +1,6 @@
 <?php
 /*------Входные данные------*/
-$str = 'XXXFG';
+$str = 'xAAAAAAAAAAfffffhxddgfka';
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////Packer 1////////////////////////////////////
@@ -107,40 +107,45 @@ return $return;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////Packer 3////////////////////////////////////
 /*----------------------------------------------------------------------------*/
-/*--------------------------------Result - str -------------------------------*/
+/*------------------------Result - arr(letters,quantity)----------------------*/
 /*----------------------------------------------------------------------------*/
 function packer_3($str){
     $count = mb_strlen($str);
-    
+    $return = [];
+    $return_1 = [];
+    $return_2 = [];
     for($i=0;$i<$count;$i++){
-        
-        if($str[$i] == $str[$i-1]) $mark++;
+        if($str[$i] == $str[$i-1] or $str[$i-1] == null) $mark++;
         else{
-            
-            $return .= $str[$i-1].chr($mark);
+            $j++;
+            $return_1 += [$j => "{$str[$i-1]}"];
+            $return_2 += [$j => chr($mark)];
             $mark = 1;
         }
     }
     
-    if($mark > 0)$return .= $str[$i-1].chr($mark);
+    if($mark != 0){
+        $j++;
+        $return_1 += [$j => "{$str[$i-1]}"];
+        $return_2 += [$j => chr($mark)];
+    }
     
+$return = ["letters" => $return_1, "quantity" => $return_2];
 return $return;
 }
 
 function unpacker_3($str){
-    $count = mb_strlen($str); 
+    $count = count($str["letters"]);   
     
-    for($i=0,$j=1;$i<=$count;$i+=2,$j+=2){
-        $bukva = $str[$i];
-        $num = ord($str[$j]);
-        for($k=0;$k<$num;$k++){
-            $return .= $bukva;
+    for($i=0;$i<=$count;$i++){
+        $num = ord($str["quantity"][$i]);
+        for($j=0;$j<$num;$j++){
+            $return .= $str["letters"][$i];
         }
     }
     
 return $return;
 }
-
 
 
 ?>
